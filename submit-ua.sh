@@ -43,7 +43,7 @@ spark-submit user_artist_matrix.py /user/$USER/input.seq output
 rm -f out/ua.out >/dev/null || true
 mkdir -p out
 #hadoop dfs -copyToLocal output/part* $WORKDIR
-hadoop dfs -copyToLocal output/part* out/ua.out
+hadoop dfs -copyToLocal output/part* out/ua.txt
 
 
 ### Shut down Spark and HDFS

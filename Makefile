@@ -4,8 +4,11 @@ ua:
 au:
 	sbatch submit-au.sh $(input)
 
+co:
+	sbatch submit-co.sh $(input)
+
 toseq:
-	sbatch submit-txt2seq.sh $(input)
+	sbatch submit-toseq.sh $(input)
 
 cleanseq:
 	rm -rf data/convertedOut

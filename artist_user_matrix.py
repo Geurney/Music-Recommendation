@@ -11,8 +11,8 @@ def map(line):
     value = line_split[0] + ',' + line_split[2]
     return (key, value)  
 
-def reduce(key, value):
-    return key + ' ' + value
+def reduce(value_a, value_b):
+    return value_a + ' ' + value_b
 
 def artist_user_matrix(file_name, output="user_artist_matrix.out"):
     sc = SparkContext("local[8]", "UserArtistMatrix")
