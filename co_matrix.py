@@ -8,13 +8,10 @@ def flat_Map(document):
     r = re.sub('[\(u\']', '', document[1])
     r = re.sub('(\))', '\n', r)
     r = r.lstrip().rstrip().split('\n')
-    print r
     return r
 
 def flat_map(line):
     line_split = line.split( )
-    print '\n'
-    print line_split
     line_split = line_split[1:]
     n = len(line_split)
     tuples = []
@@ -29,31 +26,6 @@ def flat_map(line):
             value = (int(A[1]) + int(B[1])) / 2
             j = j + 1
             tuples.append((key,value))
-    print tuples
-    return tuples
-   
-
-def map(line):
-    print 'HERE!'
-    print line
-    line_split = line.split( )
-    print '\n'
-    print line_split
-    line_split = line_split[1:]
-    n = len(line_split)
-    tuples = []
-    for i in range(0, n):
-        A = line_split[i].split(',')
-        print A
-        j = 0
-        while(j < n):
-            B = line_split[j].split(',')
-            print B
-            key = (A[0], B[0])
-            value = (int(A[1]) + int(B[1])) / 2
-            j = j + 1
-            tuples.append((key,value))
-    print tuples
     return tuples
 
 def reduce(value_a, value_b):
