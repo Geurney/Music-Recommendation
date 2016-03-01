@@ -23,6 +23,14 @@ def flat_Line(line):
             tuples.append((key,value))
     return tuples
 
+def map(tuple):
+    key = tuple[0][0]
+    value = tuple[0][1] + ',' + str(tuple[1])
+    return (key, value)
+
+def reduce_value(value_a, value_b):
+    return value_a + '\t' + value_b
+
 def reduce(value_a, value_b):
     return int(value_a) + int(value_b)
 
@@ -41,10 +49,12 @@ def co_matrix(file_name, output="co_matrix.out"):
     counts = file.flatMap(flat_Map) \
                  .flatMap(flat_Line) \
                  .reduceByKey(reduce) \
+                 .map(map) \
+                 .reduceByKey(reduce_value) \
                  .sortByKey()
 
     """ Takes the dataset stored in counts and writes everything out to OUTPUT """
-    counts.map(lambda x: x[0][0] + ',' + x[0][1] + '\t' + str(x[1])).coalesce(1).saveAsTextFile(output)
+    counts.map(lambda x: x[0] + '\t' + x[1]).coalesce(1).saveAsTextFile(output)
 
 """ Do not worry about this """
 if __name__ == "__main__":
