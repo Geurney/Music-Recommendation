@@ -5,23 +5,18 @@ import re
 from pyspark import SparkContext
 
 def flat_Map(document):
-    r = re.sub('[\(u\']', '', document[1])
-    r = re.sub('(\))', '\n', r)
-    r = r.lstrip().rstrip().split('\n')
-    return r
+    return document[1].rstrip( ).split(' ')
 
-def flat_map(line):
+def flat_Line(line):
     line_split = line.split( )
     line_split = line_split[1:]
     n = len(line_split)
     tuples = []
     for i in range(0, n):
         A = line_split[i].split(',')
-        print A
         j = 0
         while(j < n):
             B = line_split[j].split(',')
-            print B
             key = (A[0], B[0])
             value = (int(A[1]) + int(B[1])) / 2
             j = j + 1
@@ -31,7 +26,7 @@ def flat_map(line):
 def reduce(value_a, value_b):
     return int(value_a) + int(value_b)
 
-def co_matrix(file_name, output="user_artist_matrix.out"):
+def co_matrix(file_name, output="co_matrix.out"):
     sc = SparkContext("local[8]", "UserArtistMatrix")
     """ Reads in a sequence file FILE_NAME to be manipulated """
     file = sc.sequenceFile(file_name)
@@ -44,12 +39,12 @@ def co_matrix(file_name, output="user_artist_matrix.out"):
       the values of each key
     """
     counts = file.flatMap(flat_Map) \
-                 .flatMap(flat_map) \
+                 .flatMap(flat_Line) \
                  .reduceByKey(reduce) \
                  .sortByKey()
 
     """ Takes the dataset stored in counts and writes everything out to OUTPUT """
-    counts.coalesce(1).saveAsTextFile(output)
+    counts.map(lambda x: x[0][0] + ',' + x[0][1] + '\t' + str(x[1])).coalesce(1).saveAsTextFile(output)
 
 """ Do not worry about this """
 if __name__ == "__main__":

@@ -40,7 +40,7 @@ hdfs dfs -put $WORKDIR/data/convertedOut/$1.seq  /user/$USER/input.seq
 spark-submit user_artist_matrix.py /user/$USER/input.seq output
 
 #copy out 
-rm -f out/ua.out >/dev/null || true
+rm -f out/ua.txt >/dev/null || true
 mkdir -p out
 #hadoop dfs -copyToLocal output/part* $WORKDIR
 hadoop dfs -copyToLocal output/part* out/ua.txt

@@ -12,9 +12,9 @@ def map(line):
     return (key, value)  
 
 def reduce(value_a, value_b):
-    return value_a + ' ' + value_b
+    return value_a + '\t' + value_b
 
-def artist_user_matrix(file_name, output="user_artist_matrix.out"):
+def artist_user_matrix(file_name, output="artist_user_matrix.out"):
     sc = SparkContext("local[8]", "UserArtistMatrix")
     """ Reads in a sequence file FILE_NAME to be manipulated """
     file = sc.sequenceFile(file_name)
@@ -32,7 +32,8 @@ def artist_user_matrix(file_name, output="user_artist_matrix.out"):
                  .sortByKey(keyfunc=lambda k: int(k))
 
     """ Takes the dataset stored in counts and writes everything out to OUTPUT """
-    counts.coalesce(1).saveAsTextFile(output)
+    counts.map(lambda x: x[0] + ' ' + x[1]).coalesce(1).saveAsTextFile(output)
+
 
 """ Do not worry about this """
 if __name__ == "__main__":

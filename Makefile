@@ -14,7 +14,7 @@ cleanseq:
 	rm -rf data/convertedOut
 
 cleanout:
-	rm -f out/*.out
+	rm -f out/*.txt
 
 cleanlog:
 	rm -f *.out
