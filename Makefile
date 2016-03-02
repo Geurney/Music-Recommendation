@@ -7,6 +7,9 @@ au:
 co:
 	sbatch submit-co.sh $(input)
 
+re:
+	sbatch submit-re.sh $(matrix) $(user)
+
 toseq:
 	sbatch submit-toseq.sh $(input)
 
