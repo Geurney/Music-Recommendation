@@ -61,7 +61,8 @@ def recom(matrix_file_name, user_file_name, output="re.out"):
 
     recm = user_tuples.flatMap(flat_recom) \
                       .reduceByKey(reduce_recom) \
-                      .sortByKey()
+                      .filter(lambda x: x[0] not in keys) \
+                      .sortBy(lambda (key, value): int(value))
  
     """ Takes the dataset stored in counts and writes everything out to OUTPUT """
     recm.coalesce(1).saveAsTextFile(output)
