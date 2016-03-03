@@ -1,6 +1,9 @@
 ua:
 	sbatch submit-ua.sh $(input)
 
+uac:
+	sbatch submit-uac.sh $(input)
+
 au:
 	sbatch submit-au.sh $(input)
 

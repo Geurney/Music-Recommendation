@@ -7,10 +7,10 @@
 #SBATCH --job-name="sparkpython-demo"
 #SBATCH --output="sparkwc.%j.%N.out"
 #SBATCH --partition=compute
-#SBATCH --nodes=48
-#SBATCH --ntasks-per-node=2
+#SBATCH --nodes=64
+#SBATCH --ntasks-per-node=8
 #SBATCH --export=ALL
-#SBATCH -t 00:30:00
+#SBATCH -t 02:05:00
 
 ### Environment setup for Hadoop and Spark
 module load spark
@@ -37,13 +37,13 @@ hdfs dfs -mkdir -p /user/$USER
 #hdfs dfs -put $WORKDIR/data/simple1 /user/$USER/simple1
 hdfs dfs -put $WORKDIR/data/convertedOut/$1.seq  /user/$USER/input.seq
 
-spark-submit user_artist_matrix.py /user/$USER/input.seq output
+spark-submit uac.py /user/$USER/input.seq output
 
 #copy out 
-rm -f out/ua.txt >/dev/null || true
+rm -f out/uac.txt >/dev/null || true
 mkdir -p out
 #hadoop dfs -copyToLocal output/part* $WORKDIR
-hadoop dfs -copyToLocal output/part* out/ua.txt
+hadoop dfs -copyToLocal output/part* out/uac.txt
 
 
 ### Shut down Spark and HDFS
