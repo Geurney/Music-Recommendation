@@ -3,6 +3,8 @@ import sys
 from pyspark import SparkContext
 
 def flat_Map(document):
+    print 'HERE!'
+    print document
     return document[1].rstrip( ).split(' ')
 
 def map(line):

@@ -1,3 +1,6 @@
+fu:
+	sbatch submit-fu.sh $(input)
+
 ua:
 	sbatch submit-ua.sh $(input)
 

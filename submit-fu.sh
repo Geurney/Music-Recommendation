@@ -5,12 +5,12 @@
 #  T. Yang. Modified from Mahidhar Tatineni's scripe for scala
 ################################################################################
 #SBATCH --job-name="sparkpython-demo"
-#SBATCH --output="sparkwc.%j.%N.out"
+#SBATCH --output="fu.%j.%N.out"
 #SBATCH --partition=compute
-#SBATCH --nodes=2
-#SBATCH --ntasks-per-node=8
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=24
 #SBATCH --export=ALL
-#SBATCH -t 02:05:00
+#SBATCH -t 00:30:00
 
 ### Environment setup for Hadoop and Spark
 module load spark
@@ -37,13 +37,13 @@ hdfs dfs -mkdir -p /user/$USER
 #hdfs dfs -put $WORKDIR/data/simple1 /user/$USER/simple1
 hdfs dfs -put $WORKDIR/data/convertedOut/$1.seq  /user/$USER/input.seq
 
-spark-submit uac.py /user/$USER/input.seq output
+spark-submit filter_user.py /user/$USER/input.seq output
 
 #copy out 
-rm -f out/uac.txt >/dev/null || true
+rm -f out/fu.txt >/dev/null || true
 mkdir -p out
 #hadoop dfs -copyToLocal output/part* $WORKDIR
-hadoop dfs -copyToLocal output/part* out/uac.txt
+hadoop dfs -copyToLocal output/part* out/fu.txt
 
 
 ### Shut down Spark and HDFS

@@ -7,8 +7,8 @@
 #SBATCH --job-name="sparkpython-demo"
 #SBATCH --output="sparkwc.%j.%N.out"
 #SBATCH --partition=compute
-#SBATCH --nodes=48
-#SBATCH --ntasks-per-node=2
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=8
 #SBATCH --export=ALL
 #SBATCH -t 00:30:00
 
